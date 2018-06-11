@@ -1,0 +1,12 @@
+.diff-text {
+  text-transform: capitalize;
+}
+.diff-easy {
+  background-color: #5cb85c;
+}
+.diff-medium {
+  background-color: #f0ad4a;
+}
+.diff-hard {
+  background-color: #d9534f;
+}
