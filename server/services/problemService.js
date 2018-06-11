@@ -18,27 +18,46 @@ const problems = [{
   difficulty: 'hard'
 }];
 
+let ProblemModel = require("../models/problemModel");
+
 let getProblems = () => {
   return new Promise((resolve, reject) => {
-    resolve(problems);
+    ProblemModel.find({}, (err, problems) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(problems);
+      }
+    });
   });
 }
 
 let getProblem = (id) => {
   return new Promise((resolve, reject) => {
-    resolve(problems.find(problem => problem.id === id));
+    ProblemModel.findOne({ id: id }, (err, problem) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(problem);
+      }
+    });
   })
 }
 
 let addProblem = (newProblem) => {
   return new Promise((resolve, reject) => {
-    if (problems.find(problem => problem.name === newProblem.name)) {
-      reject("Problem already exists");
-    } else {
-      newProblem.id = problems.length + 1;
-      problems.push(newProblem);
-      resolve(newProblem);
-    }
+    ProblemModel.findOne({ name: newProblem.name }, (err, problem) => {
+      if (problem) {
+        reject("Problem name already exists!");
+      } else {
+        ProblemModel.count({}, (err, num) => {
+          newProblem.id = num + 1;
+          let mongoProblem = new ProblemModel(newProblem);
+          mongoProblem.save();
+          resolve(newProblem);
+        });
+      }
+    });
   });
 }
 
