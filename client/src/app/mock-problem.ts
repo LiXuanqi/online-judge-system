@@ -13,4 +13,10 @@ export const PROBLEMS: Problem[] = [{
   desc: '3 sum a!!',
   acceptance: 0.233,
   difficulty: 'medium'
+}, {
+  id: 3,
+  name: '4 sum',
+  desc: '4 sum a!!',
+  acceptance: 0.133,
+  difficulty: 'hard'
 }];
