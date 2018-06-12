@@ -12,6 +12,11 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 app.use("/api/v1", restRouter);
 
+// handle refresh.
+app.use((req, res) => {
+  res.sendFile("index.html", { root: path.join(__dirname, '../public/') });
+});
+
 app.listen(3000, function() {
   console.log('Example app listening on port 3000!');
 });

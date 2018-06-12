@@ -274,7 +274,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div>\n  <form #formRef=\"ngForm\">\n    <div class=\"form-group\">\n      <label for=\"problemName\">Problem Name</label>\n      <input \n        type=\"text\" \n        class=\"form-control\" \n        id=\"problemName\" \n        name=\"problemName\" \n        required \n        placeholder=\"Input Problem Name\" \n        [(ngModel)]=\"newProblem.name\"\n      >\n    </div>\n\n    <div class=\"form-group\">\n      <label for=\"problemDesc\">Problem Description</label>\n      <textarea \n        type=\"text\" \n        row=\"3\"\n        class=\"form-control\" \n        id=\"problemDesc\" \n        name=\"problemDesc\" \n        required \n        placeholder=\"Input Problem Description\" \n        [(ngModel)]=\"newProblem.desc\"\n      ></textarea>\n    </div>\n\n    <div class=\"form-group\">    \n      <label for=\"difficulty\">Difficulty</label>\n      <select \n        class=\"form-control\" \n        id=\"difficulty\" \n        name=\"difficulty\" \n        [(ngModel)]=\"newProblem.difficulty\"\n      >\n        <option *ngFor=\"let difficulty of difficulties\" [value]=\"difficulty\">\n          {{difficulty}}\n        </option>\n      </select>\n    </div>\n\n    <div class=\"row\">\n      <div class=\"col-md-12\">\n        <button type=\"submit\" class=\"btn btn-primary pull-right\" (click)=\"addProblem()\">Add Problem</button>\n      </div>\n    </div>\n\n  </form>\n</div>"
+module.exports = "<div>\n  <form #formRef=\"ngForm\">\n    <div class=\"form-group\">\n      <label for=\"problemName\">Problem Name</label>\n      <input \n        type=\"text\" \n        class=\"form-control\" \n        id=\"problemName\" \n        name=\"problemName\" \n        required \n        placeholder=\"Input Problem Name\" \n        [(ngModel)]=\"newProblem.name\"\n      >\n    </div>\n\n    <div class=\"form-group\">\n      <label for=\"problemDesc\">Problem Description</label>\n      <textarea \n        type=\"text\" \n        row=\"3\"\n        class=\"form-control\" \n        id=\"problemDesc\" \n        name=\"problemDesc\" \n        required \n        placeholder=\"Input Problem Description\" \n        [(ngModel)]=\"newProblem.desc\"\n      ></textarea>\n    </div>\n\n    <div class=\"form-group\">    \n      <label for=\"difficulty\">Difficulty</label>\n      <select \n        class=\"form-control\" \n        id=\"difficulty\" \n        name=\"difficulty\" \n        [(ngModel)]=\"newProblem.difficulty\"\n      >\n        <option value=\"\" disabled selected>Select difficulty</option>\n        <option *ngFor=\"let difficulty of difficulties\" [value]=\"difficulty\">\n          {{difficulty}}\n        </option>\n      </select>\n    </div>\n\n    <div class=\"row\">\n      <div class=\"col-md-12\">\n        <button type=\"submit\" class=\"btn btn-primary pull-right\" (click)=\"addProblem()\">Add Problem</button>\n      </div>\n    </div>\n\n  </form>\n</div>"
 
 /***/ }),
 
@@ -306,7 +306,7 @@ var DEFAULT_PROBLEM = Object.freeze({
     id: 0,
     name: "",
     desc: "",
-    difficulty: "Easy",
+    difficulty: "",
     acceptance: 0
 });
 var NewProblemComponent = /** @class */ (function () {
