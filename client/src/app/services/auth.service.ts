@@ -2,8 +2,8 @@
 
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { filter } from 'rxjs/operators';
 import * as auth0 from 'auth0-js';
+import { Http, Response, Headers  } from '@angular/http';
 
 (window as any).global = window;
 
@@ -21,7 +21,10 @@ export class AuthService {
 
   userProfile: any;
 
-  constructor(public router: Router) {}
+  constructor(
+    public router: Router,
+    private http: Http
+  ) {}
 
   public login(): void {
     this.auth0.authorize();
@@ -77,6 +80,29 @@ export class AuthService {
       }
       cb(err, profile);
     });
+  }
+
+  public resetPassword(): void {
+    const self = this;
+    let options = {
+      headers: new Headers({'content-type': 'application/json'})
+    }
+    let body = {
+      client_id: 'K2EiUUL7b_DtZ4S-Z6jqym-L1BXCtypn',
+      email: self.userProfile.name,
+      connection: 'Username-Password-Authentication'
+    }
+    this.http.post('https://lixuanqi.auth0.com/dbconnections/change_password', body, options)
+      .toPromise()
+      .then((res: Response) => {
+        console.log(res);
+      })
+      .catch(this.handleError);
+  }
+
+  private handleError(error: any): Promise<any> {
+    console.error('Error occurred', error);
+    return Promise.reject(error.message || error);
   }
 
 }

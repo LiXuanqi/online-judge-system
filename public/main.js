@@ -625,7 +625,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n\n  <ul class=\"nav nav-tabs\" id=\"myTab\" role=\"tablist\">\n    <li class=\"nav-item\">\n      <a class=\"nav-link active\" id=\"home-tab\" data-toggle=\"tab\" href=\"#home\" role=\"tab\" aria-controls=\"home\" aria-selected=\"true\">Personal Information</a>\n    </li>\n    <li class=\"nav-item\">\n      <a class=\"nav-link\" id=\"profile-tab\" data-toggle=\"tab\" href=\"#profile\" role=\"tab\" aria-controls=\"profile\" aria-selected=\"false\">Change Password</a>\n    </li>\n  </ul>\n  <div class=\"tab-content\" id=\"myTabContent\">\n    <div class=\"tab-pane fade show active\" id=\"home\" role=\"tabpanel\" aria-labelledby=\"home-tab\">\n      <div class=\"form-group\">\n        <label for=\"email\">Email</label>\n        <input type=\"text\" class=\"form-control\" id=\"email\"\n        name=\"email\" disabled value=\"{{profile?.name}}\">\n      </div>\n      <div class=\"form-group\">\n        <label for=\"username\">User name</label>\n        <input type=\"text\" class=\"form-control\" id=\"usernmae\"\n        name=\"username\" disabled value=\"{{ profile?.nickname }}\">\n      </div>\n    </div>\n    <div class=\"tab-pane fade\" id=\"profile\" role=\"tabpanel\" aria-labelledby=\"profile-tab\">\n        <form class=\"navbar-form\">\n          <button type=\"button\" class=\"btn btn-large btn-success\" (click)=\"resetPassword()\">Reset password via email</button>\n        </form>\n    </div>\n  </div>\n</div>\n"
+module.exports = "<div class=\"container\">\n  <!-- alert -->\n  <!-- <div class=\"alert alert-success alert-dismissible fade show\" role=\"alert\">\n    <strong>Success!</strong> We've just sent you an email to reset your password.\n    <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n      <span aria-hidden=\"true\">&times;</span>\n    </button>\n  </div> -->\n\n  <ul class=\"nav nav-tabs\" id=\"myTab\" role=\"tablist\">\n    <li class=\"nav-item\">\n      <a class=\"nav-link active\" id=\"home-tab\" data-toggle=\"tab\" href=\"#home\" role=\"tab\" aria-controls=\"home\" aria-selected=\"true\">Personal Information</a>\n    </li>\n    <li class=\"nav-item\">\n      <a class=\"nav-link\" id=\"profile-tab\" data-toggle=\"tab\" href=\"#profile\" role=\"tab\" aria-controls=\"profile\" aria-selected=\"false\">Change Password</a>\n    </li>\n  </ul>\n  <div class=\"tab-content\" id=\"myTabContent\">\n    <div class=\"tab-pane fade show active\" id=\"home\" role=\"tabpanel\" aria-labelledby=\"home-tab\">\n      <div class=\"form-group\">\n        <label for=\"email\">Email</label>\n        <input type=\"text\" class=\"form-control\" id=\"email\"\n        name=\"email\" disabled value=\"{{profile?.name}}\">\n      </div>\n      <div class=\"form-group\">\n        <label for=\"username\">User name</label>\n        <input type=\"text\" class=\"form-control\" id=\"usernmae\"\n        name=\"username\" disabled value=\"{{ profile?.nickname }}\">\n      </div>\n    </div>\n    <div class=\"tab-pane fade\" id=\"profile\" role=\"tabpanel\" aria-labelledby=\"profile-tab\">\n        <form class=\"navbar-form\">\n          <button type=\"button\" class=\"btn btn-large btn-success\" (click)=\"resetPassword()\">Reset password via email</button>\n        </form>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -763,6 +763,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var auth0_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! auth0-js */ "./node_modules/_auth0-js@9.6.1@auth0-js/src/index.js");
 /* harmony import */ var auth0_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(auth0_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _angular_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/http */ "./node_modules/@angular/http/fesm5/http.js");
 // src/app/auth/auth.service.ts
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -776,10 +777,12 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 window.global = window;
 var AuthService = /** @class */ (function () {
-    function AuthService(router) {
+    function AuthService(router, http) {
         this.router = router;
+        this.http = http;
         this.auth0 = new auth0_js__WEBPACK_IMPORTED_MODULE_2__["WebAuth"]({
             clientID: 'K2EiUUL7b_DtZ4S-Z6jqym-L1BXCtypn',
             domain: 'lixuanqi.auth0.com',
@@ -840,9 +843,31 @@ var AuthService = /** @class */ (function () {
             cb(err, profile);
         });
     };
+    AuthService.prototype.resetPassword = function () {
+        var self = this;
+        var options = {
+            headers: new _angular_http__WEBPACK_IMPORTED_MODULE_3__["Headers"]({ 'content-type': 'application/json' })
+        };
+        var body = {
+            client_id: 'K2EiUUL7b_DtZ4S-Z6jqym-L1BXCtypn',
+            email: self.userProfile.name,
+            connection: 'Username-Password-Authentication'
+        };
+        this.http.post('https://lixuanqi.auth0.com/dbconnections/change_password', body, options)
+            .toPromise()
+            .then(function (res) {
+            console.log(res);
+        })
+            .catch(this.handleError);
+    };
+    AuthService.prototype.handleError = function (error) {
+        console.error('Error occurred', error);
+        return Promise.reject(error.message || error);
+    };
     AuthService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
-        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
+        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"],
+            _angular_http__WEBPACK_IMPORTED_MODULE_3__["Http"]])
     ], AuthService);
     return AuthService;
 }());
