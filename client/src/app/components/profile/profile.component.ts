@@ -7,6 +7,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 export class ProfileComponent implements OnInit {
 
   profile: any;
+  isAlertVisible: boolean = false;
 
   constructor(@Inject('auth') private auth) { }
 
@@ -20,8 +21,17 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  resetPassword() {
-    this.auth.resetPassword();
+  public closeAlert(alert: IAlert) {
+    this.isAlertVisible = false;
+  }
+
+  private resetPassword() {
+    this.auth.resetPassword()
+      .then((res: Response) => {
+        console.log(res);
+        this.isAlertVisible = true;
+      })
+      .catch(this.handleError);
   }
 
 }

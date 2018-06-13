@@ -82,7 +82,7 @@ export class AuthService {
     });
   }
 
-  public resetPassword(): void {
+  public resetPassword(): Promise<any> {
     const self = this;
     let options = {
       headers: new Headers({'content-type': 'application/json'})
@@ -92,17 +92,9 @@ export class AuthService {
       email: self.userProfile.name,
       connection: 'Username-Password-Authentication'
     }
-    this.http.post('https://lixuanqi.auth0.com/dbconnections/change_password', body, options)
+    return this.http.post('https://lixuanqi.auth0.com/dbconnections/change_password', body, options)
       .toPromise()
-      .then((res: Response) => {
-        console.log(res);
-      })
-      .catch(this.handleError);
   }
 
-  private handleError(error: any): Promise<any> {
-    console.error('Error occurred', error);
-    return Promise.reject(error.message || error);
-  }
 
 }
