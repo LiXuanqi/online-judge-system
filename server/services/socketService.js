@@ -18,7 +18,7 @@ module.exports = function(io) {
 
     socket.on('change', delta => {
       console.log("change from client: " + socketIdToSessionId[socket.id] + " " + delta);
-      let sessionId = socketIdToSessionId[socket.id]; // ?
+      let sessionId = socketIdToSessionId[socket.id];
       if (sessionId in collaborations) {
         let participants = collaborations[sessionId]['participants'];
         for (let i = 0; i < participants.length; i++) {
