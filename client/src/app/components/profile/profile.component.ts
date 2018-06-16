@@ -21,17 +21,22 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  public closeAlert(alert: IAlert) {
+  public closeAlert() {
     this.isAlertVisible = false;
   }
 
-  private resetPassword() {
+  public resetPassword() {
     this.auth.resetPassword()
       .then((res: Response) => {
         console.log(res);
         this.isAlertVisible = true;
       })
       .catch(this.handleError);
+  }
+
+  private handleError(error: any): Promise<any> {
+    console.error('An error occurred', error);
+    return Promise.reject(error.body || error);
   }
 
 }

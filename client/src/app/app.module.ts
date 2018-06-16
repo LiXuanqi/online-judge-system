@@ -12,6 +12,7 @@ import { routing } from './app.routes';
 import { DataService } from './services/data.service';
 import { AuthService } from './services/auth.service';
 import { AuthGuardService } from './services/auth-guard.service';
+import { CollaborationService } from './services/collaboration.service';
 
 import { NewProblemComponent } from './components/new-problem/new-problem.component';
 import { FormsModule } from '@angular/forms';
@@ -19,6 +20,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { HttpModule } from '@angular/http';
 import { ProfileComponent } from './components/profile/profile.component';
 import { CallbackComponent } from './components/callback/callback.component';
+import { EditorComponent } from './components/editor/editor.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,7 +29,8 @@ import { CallbackComponent } from './components/callback/callback.component';
     NewProblemComponent,
     NavbarComponent,
     ProfileComponent,
-    CallbackComponent
+    CallbackComponent,
+    EditorComponent
   ],
   imports: [
     BrowserModule,
@@ -45,6 +48,9 @@ import { CallbackComponent } from './components/callback/callback.component';
   }, {
     provide: "authGuard",
     useClass: AuthGuardService
+  }, {
+    provide: 'collaboration',
+    useClass: CollaborationService
   }],
   bootstrap: [AppComponent]
 })
