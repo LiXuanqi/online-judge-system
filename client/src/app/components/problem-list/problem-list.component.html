@@ -10,11 +10,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let problem of problems">
+        <tr *ngFor="let problem of problems | search: searchTerm ">
           <th scope="row">{{problem.id}}</th>
           <td><a [routerLink]="['/problems', problem.id]">{{problem.name}}</a></td>
-          <td>{{problem.acceptance * 100 + '%'}}</td>
-          <td><span class="badge badge-pill badge-secondary diff-text {{'diff-' + problem.difficulty.toLowerCase()}}">{{problem.difficulty}}</span></td>      
+          <td>{{problem.acceptance | percent }}</td>
+          <td><span class="badge badge-pill badge-secondary diff-text {{'diff-' + problem.difficulty.toLowerCase()}}">{{ problem.difficulty }}</span></td>      
         </tr>
       </tbody>
     </table>

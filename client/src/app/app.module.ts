@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { ProblemListComponent } from './components/problem-list/problem-list.component';
@@ -13,6 +13,7 @@ import { DataService } from './services/data.service';
 import { AuthService } from './services/auth.service';
 import { AuthGuardService } from './services/auth-guard.service';
 import { CollaborationService } from './services/collaboration.service';
+import { InputService } from './services/input.service';
 
 import { NewProblemComponent } from './components/new-problem/new-problem.component';
 import { FormsModule } from '@angular/forms';
@@ -21,6 +22,7 @@ import { HttpModule } from '@angular/http';
 import { ProfileComponent } from './components/profile/profile.component';
 import { CallbackComponent } from './components/callback/callback.component';
 import { EditorComponent } from './components/editor/editor.component';
+import { SearchPipe } from './pipes/search.pipe';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,11 +32,13 @@ import { EditorComponent } from './components/editor/editor.component';
     NavbarComponent,
     ProfileComponent,
     CallbackComponent,
-    EditorComponent
+    EditorComponent,
+    SearchPipe
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     routing,
     NgbModule.forRoot()
@@ -51,6 +55,9 @@ import { EditorComponent } from './components/editor/editor.component';
   }, {
     provide: 'collaboration',
     useClass: CollaborationService
+  }, {
+    provide: "input",
+    useClass: InputService
   }],
   bootstrap: [AppComponent]
 })
