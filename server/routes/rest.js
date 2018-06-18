@@ -43,10 +43,10 @@ router.post("/build_and_run", jsonParser, (req, res) => {
   console.log(lang + ': ' + userCode);
   restClient.methods.build_and_run(
     {
-      header: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json" },
       data: {
-        "code": userCode,
-        "lang": lang
+        code: userCode,
+        lang: lang
       }
     }, (data, response) => {
       console.log(response);
