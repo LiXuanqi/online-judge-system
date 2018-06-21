@@ -11,7 +11,7 @@ import { debounceTime } from 'rxjs/operators';
 })
 export class NavbarComponent implements OnInit {
 
-  title: string = "LeeCode";
+  title: string = "DailyCode";
   username: string = "LEE";
 
   searchBox: FormControl = new FormControl();

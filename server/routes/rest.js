@@ -49,7 +49,6 @@ router.post("/build_and_run", jsonParser, (req, res) => {
         lang: lang
       }
     }, (data, response) => {
-      console.log(response);
       console.log("Received response from execution server: " + response);
       const text = `
         Build output: ${data['build']}

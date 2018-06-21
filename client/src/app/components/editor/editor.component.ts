@@ -1,4 +1,5 @@
 import {Component, OnInit, Inject} from '@angular/core';
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 import {ActivatedRoute, Params} from '@angular/router';
 
@@ -40,7 +41,8 @@ export class EditorComponent implements OnInit {
   constructor(
     @Inject('data') private data,
     @Inject('collaboration') private collaboration,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private modalService: NgbModal
   ) { }
 
   ngOnInit() {
@@ -101,4 +103,13 @@ export class EditorComponent implements OnInit {
       })
     console.log(userCode);
   }
+
+  open(resetModel) {
+    this.modalService.open(resetModel).result.then(() => {
+      this.resetEditor();
+    }, (reason) => {
+      console.log(reason);
+    });
+  }
+
 }
